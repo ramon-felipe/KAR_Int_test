@@ -56,7 +56,9 @@ namespace dotnet_registration_api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            await this._userService.Delete(id);
+
+            return Ok();
         }
     }
 }

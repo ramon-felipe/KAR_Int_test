@@ -78,7 +78,12 @@ namespace dotnet_registration_api.Services
 
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var user = await this._userRepository.GetUserById(id);
+
+            if(user == null)
+                throw new NotFoundException();
+
+            await this._userRepository.DeleteUser(id);
         }
 
     }

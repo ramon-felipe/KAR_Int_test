@@ -3,6 +3,7 @@ using dotnet_registration_api.Data.Models;
 using dotnet_registration_api.Data.Repositories;
 using dotnet_registration_api.Helpers;
 using Mapster;
+using System.Reflection;
 
 namespace dotnet_registration_api.Services
 {
@@ -26,7 +27,16 @@ namespace dotnet_registration_api.Services
 
         public async Task<User> Login(LoginRequest login)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(login.Username) || 
+               string.IsNullOrWhiteSpace(login.Password))
+                throw new AppException();
+
+            var user = await this._userRepository.GetUserByUsernameAndPassword(login.Username, HashHelper.HashPassword(login.Password));
+
+            if (user == null)
+                throw new NotFoundException();
+
+            return user;
         }
 
         public async Task<User> Register(RegisterRequest register)

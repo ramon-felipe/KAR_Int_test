@@ -54,7 +54,26 @@ namespace dotnet_registration_api.Services
 
         public async Task<User> Update(int id, UpdateRequest updateRequest)
         {
-            throw new NotImplementedException();
+            var userById = await this._userRepository.GetUserById(id);
+
+            if (userById == null)
+                throw new NotFoundException();
+
+            var userByPass = await this._userRepository.GetUserByUsernameAndPassword(updateRequest.Username, HashHelper.HashPassword(updateRequest.OldPassword));
+
+            if (userByPass == null)
+                throw new AppException();
+
+            var userByName = await this._userRepository.GetUserByUsername(updateRequest.Username);
+
+            if (userByName.Id != id)
+                throw new AppException();
+
+            userById.FirstName = updateRequest.FirstName;
+            userById.LastName = updateRequest.LastName;
+            userById.PasswordHash = HashHelper.HashPassword(updateRequest.NewPassword);
+
+            return await this._userRepository.UpdateUser(userById);
         }
 
         public async Task Delete(int id)

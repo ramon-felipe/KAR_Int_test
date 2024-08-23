@@ -48,7 +48,9 @@ namespace dotnet_registration_api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Update(int id, [FromBody]UpdateRequest model)
         {
-            throw new NotImplementedException();
+            var updatedUser = await this._userService.Update(id, model);
+
+            return Ok(updatedUser);
         }
 
         [HttpDelete("{id}")]

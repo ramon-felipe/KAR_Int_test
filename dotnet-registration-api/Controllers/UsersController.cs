@@ -18,7 +18,9 @@ namespace dotnet_registration_api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody]LoginRequest model)
         {
-            throw new NotImplementedException();
+            var user = await this._userService.Login(model);
+
+            return Ok(user);
         }
 
         [HttpPost("register")]

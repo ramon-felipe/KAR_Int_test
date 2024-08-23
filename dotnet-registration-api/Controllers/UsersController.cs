@@ -40,7 +40,9 @@ namespace dotnet_registration_api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
-            throw new NotImplementedException();
+            var user = await this._userService.GetById(id);
+
+            return Ok(user);
         }
 
         [HttpPut("{id}")]

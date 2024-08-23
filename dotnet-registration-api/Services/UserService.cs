@@ -22,7 +22,9 @@ namespace dotnet_registration_api.Services
 
         public async Task<User> GetById(int id)
         {
-            throw new NotImplementedException();
+            var user = await this._userRepository.GetUserById(id);
+
+            return user ?? throw new NotFoundException();
         }
 
         public async Task<User> Login(LoginRequest login)
@@ -33,10 +35,7 @@ namespace dotnet_registration_api.Services
 
             var user = await this._userRepository.GetUserByUsernameAndPassword(login.Username, HashHelper.HashPassword(login.Password));
 
-            if (user == null)
-                throw new NotFoundException();
-
-            return user;
+            return user ?? throw new NotFoundException();
         }
 
         public async Task<User> Register(RegisterRequest register)

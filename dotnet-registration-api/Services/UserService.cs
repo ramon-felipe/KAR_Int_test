@@ -17,7 +17,7 @@ namespace dotnet_registration_api.Services
 
         public async Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await this._userRepository.GetAllUsers();
         }
 
         public async Task<User> GetById(int id)

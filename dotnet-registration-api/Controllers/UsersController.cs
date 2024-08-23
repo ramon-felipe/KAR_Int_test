@@ -32,7 +32,9 @@ namespace dotnet_registration_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
-            throw new NotImplementedException();
+            var users = await this._userService.GetAll();
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]

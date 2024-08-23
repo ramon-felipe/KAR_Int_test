@@ -14,31 +14,39 @@ namespace dotnet_registration_api.Controllers
         {
             _userService = userService;
         }
+
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody]LoginRequest model)
         {
             throw new NotImplementedException();
         }
+
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register([FromBody]RegisterRequest model)
         {
-            throw new NotImplementedException();
+            var newUser = await this._userService.Register(model);
+
+            return Ok(newUser);
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
             throw new NotImplementedException();
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
             throw new NotImplementedException();
         }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Update(int id, [FromBody]UpdateRequest model)
         {
             throw new NotImplementedException();
         }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
